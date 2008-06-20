@@ -1,6 +1,7 @@
 require 'active_support'
 require 'action_controller'
 require 'action_view'
+require 'action_view/test_case'
 require 'rexml/document'
 require 'html/document'
 
