@@ -94,23 +94,19 @@ module HelperMeTest
       # that allow optional closing tags (p, li, td). <em>You must explicitly
       # close all of your tags to use these assertions.</em>
       def assert_tag_in(*opts)
-        clean_backtrace_view_assertions do
-          target = opts.shift
-          tag_opts = find_tag_opts(opts)
-          assert !find_tag_in(target, tag_opts).nil?, 
-                 "#{tag_opts.inspect} was not found in \n#{target.inspect}"
-        end
+        target = opts.shift
+        tag_opts = find_tag_opts(opts)
+        assert !find_tag_in(target, tag_opts).nil?, 
+               "#{tag_opts.inspect} was not found in \n#{target.inspect}"
       end
       
       # Identical to +assert_tag_in+, but asserts that a matching tag does _not_
       # exist. (See +assert_tag_in+ for a full discussion of the syntax.)
       def assert_tag_not_in(*opts)
-        clean_backtrace_view_assertions do
-          target = opts.shift
-          tag_opts = find_tag_opts(opts)
-          assert find_tag_in(target, tag_opts).nil?, 
-                 "#{tag_opts.inspect} was found in \n#{target.inspect}"
-        end
+        target = opts.shift
+        tag_opts = find_tag_opts(opts)
+        assert find_tag_in(target, tag_opts).nil?, 
+               "#{tag_opts.inspect} was found in \n#{target.inspect}"
       end
       
       

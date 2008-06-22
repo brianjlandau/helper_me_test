@@ -8,8 +8,10 @@ class HelperTestsGenerator < Rails::Generator::Base
         end
       else
         Dir.glob(File.join(RAILS_ROOT, 'app', 'helpers/**/*_helper.rb')) do |helper_file|
+          # get full file path without extension
           helper_full_path = File.expand_path(helper_file).gsub(/\.rb$/, '')
-          helper_relative_path = helper_full_path.gsub(/^#{Regexp.escape(File.expand_path(File.join(RAILS_ROOT, 'app', 'helpers')))}\//, '')
+          # get path relative to helpers directory
+          helper_relative_path = helper_full_path.gsub(/^#{Regexp.escape(File.join(RAILS_ROOT, 'app', 'helpers'))}\//, '')
           helper_full_name = helper_relative_path.camelcase
 
           create_helper_test(m, helper_full_name, helper_relative_path)
@@ -18,10 +20,15 @@ class HelperTestsGenerator < Rails::Generator::Base
     end
   end
   
+  protected
+    def banner
+      "Usage: #{$0} #{spec.name} [SampleHelper, Admin::AnotherHelper, ...]"
+    end
+  
   private
     def create_helper_test(manifest, helper_full_name, helper_path)
-      helper_relative_dir = helper_path.gsub(/(\/)?\w+$/, '')
-      helper_file_name = helper_path.match(/\w+$/)[0]
+      helper_relative_dir = File.dirname(helper_path)
+      helper_file_name = File.basename(helper_path)
       helper_methods = helper_full_name.constantize.public_instance_methods
 
       manifest.class_collisions "#{helper_full_name}Test"

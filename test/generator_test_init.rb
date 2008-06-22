@@ -36,8 +36,7 @@ end
 require 'rails_generator'
 
 # Mocks the admin module so helpers loads propery
-module Admin
-end
+module Admin; end
 
 class GeneratorTestCase < ActiveSupport::TestCase
   include FileUtils
@@ -116,7 +115,7 @@ class GeneratorTestCase < ActiveSupport::TestCase
   # asserts that the given file does not exists
   def assert_no_file_exists(path)
     assert !File.exist?("#{RAILS_ROOT}/#{path}"),
-      "The file '#{RAILS_ROOT}/#{path}' should exist"
+      "The file '#{RAILS_ROOT}/#{path}' should not exist"
   end
 
   # Asserts that the given class source file was generated.
