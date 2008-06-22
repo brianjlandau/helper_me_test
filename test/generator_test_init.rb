@@ -1,3 +1,4 @@
+# This is so the initializer is properly found
 $:.unshift Gem.searcher.find('rails_generator').full_gem_path + '/lib'
 ENV["RAILS_ENV"] = "test"
 if defined? PLUGIN_ROOT
@@ -34,6 +35,10 @@ end
 
 require 'rails_generator'
 
+# Mocks the admin module so helpers loads propery
+module Admin
+end
+
 class GeneratorTestCase < ActiveSupport::TestCase
   include FileUtils
   
@@ -45,8 +50,9 @@ class GeneratorTestCase < ActiveSupport::TestCase
     
     cp_r File.join(PLUGIN_ROOT, 'test/fixtures/helpers'), File.join(RAILS_ROOT, 'app')
     
+    # ensures helpers are found
     $: << File.join(RAILS_ROOT, 'app/helpers')
-    %w(sample_helper blog_helper).each do |h|
+    %w(sample_helper blog_helper admin/post_helper).each do |h|
       require h
     end
 
@@ -104,6 +110,12 @@ class GeneratorTestCase < ActiveSupport::TestCase
   # asserts that the given file exists
   def assert_file_exists(path)
     assert File.exist?("#{RAILS_ROOT}/#{path}"),
+      "The file '#{RAILS_ROOT}/#{path}' should exist"
+  end
+  
+  # asserts that the given file does not exists
+  def assert_no_file_exists(path)
+    assert !File.exist?("#{RAILS_ROOT}/#{path}"),
       "The file '#{RAILS_ROOT}/#{path}' should exist"
   end
 
