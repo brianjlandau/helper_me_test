@@ -165,15 +165,15 @@ module HelperMeTest
       # The first parameter specifies the target HTML to which the selector should match
       #
       # ==== Example
-      #   assert_select "ol>li" do |elements|
+      #   assert_select_in html, "ol>li" do |elements|
       #     elements.each do |element|
-      #       assert_select element, "li"
+      #       assert_select_in element, "li"
       #     end
       #   end
       #
       # Or for short:
-      #   assert_select "ol>li" do
-      #     assert_select "li"
+      #   assert_select_in html, "ol>li" do
+      #     assert_select_in "li"
       #   end
       #
       # The selector may be a CSS selector expression (String), an expression
@@ -211,30 +211,30 @@ module HelperMeTest
       # ==== Examples
       #
       #   # At least one form element
-      #   assert_select "form"
+      #   assert_select_in html, "form"
       #
       #   # Form element includes four input fields
-      #   assert_select "form input", 4
+      #   assert_select_in html, "form input", 4
       #
       #   # Page title is "Welcome"
-      #   assert_select "title", "Welcome"
+      #   assert_select_in html, "title", "Welcome"
       #
       #   # Page title is "Welcome" and there is only one title element
-      #   assert_select "title", {:count=>1, :text=>"Welcome"},
+      #   assert_select_in html, "title", {:count=>1, :text=>"Welcome"},
       #       "Wrong title or more than one title element"
       #
       #   # Page contains no forms
-      #   assert_select "form", false, "This page must contain no forms"
+      #   assert_select_in html, "form", false, "This page must contain no forms"
       #
       #   # Test the content and style
-      #   assert_select "body div.header ul.menu"
+      #   assert_select_in html, "body div.header ul.menu"
       #
       #   # Use substitution values
-      #   assert_select "ol>li#?", /item-\d+/
+      #   assert_select_in html, "ol>li#?", /item-\d+/
       #
       #   # All input fields in the form have a name
-      #   assert_select "form input" do
-      #     assert_select "[name=?]", /.+/  # Not empty
+      #   assert_select_in html, "form input" do
+      #     assert_select_in "[name=?]", /.+/  # Not empty
       #   end
       def assert_select_in(*args, &block)
         if @selected
