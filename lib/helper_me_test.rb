@@ -135,10 +135,16 @@ module HelperMeTest
     module HpricotAssertions
       ##
       # Does an Hpricot search on a given target. See Hpricot for documentation.
-      def assert_xpath_in(target, match)
+      def assert_hpricot_in(target, match)
         target = Hpricot(target)
         assert !target.search(match).empty?, 
                "expected tag, but no tag found matching #{match.inspect} in:\n#{target.inspect}"
+      end
+      
+      def assert_hpricot_not_in(target, match)
+        target = Hpricot(target)
+        assert target.search(match).empty?, 
+               "expected no tag, but tag found matching #{match.inspect} in:\n#{target.inspect}"
       end
     end
     end

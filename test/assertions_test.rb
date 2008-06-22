@@ -42,6 +42,11 @@ end
 class HpricotAssertionsTest < ActiveSupport::TestCase
   include HelperMeTest::Assertions::HpricotAssertions
   
+  def test_assert_hpricot_in
+    html = '<p id="test"><span>hello world</span></p>'
+    assert_hpricot_in html, 'p[@id="test"]/span'
+    assert_hpricot_not_in html, 'div/form'
+  end
   
 end
 
