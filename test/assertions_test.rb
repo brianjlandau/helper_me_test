@@ -67,6 +67,13 @@ class SelectorAssertionsTest < ActiveSupport::TestCase
       html = '<div><p id="test"><span>hello world</span></p></div>'
       assert_select_in html, 'p#test span', 'hello world'
     end
+    
+    should 'accept nested selector' do
+      html = '<div><ul id="list"><li>one</li><li>two</li></ul></div>'
+      assert_select_in html, 'ul#list' do
+        assert_select_in 'li', 'one'
+      end
+    end
   end
   
 end
