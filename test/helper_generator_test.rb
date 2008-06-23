@@ -6,9 +6,49 @@ class HelperGeneratorTest < GeneratorTestCase
     cp_r File.join(PLUGIN_ROOT, 'generators/helper'),  File.join(RAILS_ROOT, 'vendor/generators')
   end
   
-  context 'using generator with no params' do
+  context 'running generator with simple name' do
     setup do
-      # run_generator('helper', %w(Tags))
+      run_generator('helper', %w(Tags))
+    end
+    
+    should 'create helper' do
+      assert_generated_helper_for :tags
+    end
+    
+    should 'create helper tests' do
+      assert_generated_class 'test/helpers/tags_helper_test', 'ActionView::TestCase'
+    end
+  end
+  
+  context 'running generator with complex name' do
+    setup do
+      run_generator('helper' %w(Admin::Tags))
+    end
+    
+    should 'create helper' do
+      assert_generated_helper_for 'Admin::Tags'
+    end
+    
+    should 'create helper tests' do
+      assert_generated_class 'test/helpers/admin/tags_helper_test', 'ActionView::TestCase'
+    end
+  end
+  
+  context 'running generator with method names' do
+    setup do
+      run_generator('helper' %w(Tags format sort to_html))
+    end
+    
+    should 'create helper with methods' do
+      assert_generated_helper_for :tags do |helper|
+        assert_has_method helper, :format, :sort, :to_html
+      end
+    end
+    
+    should 'create helper tests with methods' do
+      assert_generated_class 'test/helpers/tags_helper_test', 'ActionView::TestCase' do |test|
+        assert_has_method test, :test_format, :test_sort, :test_to_html
+      end
     end
   end
   
