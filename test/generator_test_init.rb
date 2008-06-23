@@ -66,7 +66,7 @@ class GeneratorTestCase < ActiveSupport::TestCase
     end
   end
   
-  #3 Instantiates the Generator.
+  # Instantiates the Generator.
   def build_generator(name, params)
     Rails::Generator::Base.instance(name, params)
   end

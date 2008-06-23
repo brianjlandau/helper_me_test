@@ -5,6 +5,7 @@ class HelperTestsGeneratorTest < GeneratorTestCase
     super
     # this is so the generator gets found
     cp_r File.join(PLUGIN_ROOT, 'generators/helper_tests'),  File.join(RAILS_ROOT, 'vendor/generators')
+    Rails::Generator::Base.use_component_sources!
   end
   
   context 'using generator with no params' do
