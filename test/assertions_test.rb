@@ -55,7 +55,18 @@ end
 
 
 class SelectorAssertionsTest < ActiveSupport::TestCase
-  include HelperMeTest::Assertions::HpricotAssertions
+  include HelperMeTest::Assertions::SelectorAssertions
   
+  context 'selector assertions' do
+    should 'accept selector' do
+      html = '<div><p id="test"><span>hello world</span></p></div>'
+      assert_select_in html, 'p#test span'
+    end
+    
+    should 'accept selector with equity test' do
+      html = '<div><p id="test"><span>hello world</span></p></div>'
+      assert_select_in html, 'p#test span', 'hello world'
+    end
+  end
   
 end

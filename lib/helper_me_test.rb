@@ -122,7 +122,7 @@ module HelperMeTest
         end
 
         def find_tag_in(target, opts = {})
-          target = ::HTML::Document.new(target, false, false)
+          target = HTML::Document.new(target, false, false)
           target.find(opts)
         end
         
@@ -157,6 +157,10 @@ module HelperMeTest
     #
     # Also see HTML::Selector to learn how to use selectors.
     module SelectorAssertions
+      unless const_defined?(:NO_STRIP)
+        NO_STRIP = %w{pre script style textarea}
+      end
+      
       # :call-seq:
       #   assert_select(target, selector, equality?, message?)
       #
@@ -243,7 +247,7 @@ module HelperMeTest
         else
           # Start with mandatory target.
           target = args.shift
-          root = HTML::Node.new(target)
+          root = HTML::Document.new(target, false, false).root
         end
         
         # Then get mandatory selector.
@@ -293,8 +297,9 @@ module HelperMeTest
         if args.shift
           raise ArgumentError, "Not expecting that last argument, you either have too many arguments, or they're the wrong type"
         end
-
+        
         matches = selector.select(root)
+        
         # If text/html, narrow down to those elements that match it.
         content_mismatch = nil
         if match_with = equals[:text]
