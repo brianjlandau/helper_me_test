@@ -1,5 +1,5 @@
 Description:
-    Explain the generator
+    Creates a helper based on a camelcased or underscored name
 
 Example:
     ./script/generate helper Dates [method_name, ...]

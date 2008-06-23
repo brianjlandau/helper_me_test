@@ -3,8 +3,7 @@ class HelperTestsGenerator < Rails::Generator::Base
     record do |m|
       unless @args.empty?
         @args.each do |helper_class|
-          helper_path = helper_class.underscore
-          create_helper_test(m, helper_class, helper_path)
+          create_helper_test(m, helper_class)
         end
       else
         Dir.glob(File.join(RAILS_ROOT, 'app', 'helpers/**/*_helper.rb')) do |helper_file|
@@ -12,9 +11,8 @@ class HelperTestsGenerator < Rails::Generator::Base
           helper_full_path = File.expand_path(helper_file).gsub(/\.rb$/, '')
           # get path relative to helpers directory
           helper_relative_path = helper_full_path.gsub(/^#{Regexp.escape(File.join(RAILS_ROOT, 'app', 'helpers'))}\//, '')
-          helper_full_name = helper_relative_path.camelcase
 
-          create_helper_test(m, helper_full_name, helper_relative_path)
+          create_helper_test(m, helper_relative_path)
         end
       end
     end
@@ -22,13 +20,12 @@ class HelperTestsGenerator < Rails::Generator::Base
   
   protected
     def banner
-      "Usage: #{$0} #{spec.name} [SampleHelper, Admin::AnotherHelper, ...]"
+      "Usage: #{$0} #{spec.name} [SampleHelper Admin::AnotherHelper ...]"
     end
   
   private
-    def create_helper_test(manifest, helper_full_name, helper_path)
-      helper_relative_dir = File.dirname(helper_path)
-      helper_file_name = File.basename(helper_path)
+    def create_helper_test(manifest, helper_name)
+      helper_file_name, helper_relative_dir, helper_full_name = extract_modules_names_paths(helper_name)
       helper_methods = helper_full_name.constantize.public_instance_methods
 
       manifest.class_collisions "#{helper_full_name}Test"
@@ -41,5 +38,17 @@ class HelperTestsGenerator < Rails::Generator::Base
                             "#{helper_file_name}_test.rb"), 
                   :assigns => { :helper_full_name => helper_full_name, 
                                 :helper_methods => helper_methods }
+    end
+    
+    # Extract modules from filesystem-style or ruby-style path:
+    #   good/fun/stuff
+    #   Good::Fun::Stuff
+    # produce the same results.
+    def extract_modules_names_paths(name)
+      modules = name.include?('/') ? name.split('/') : name.split('::')
+      file_name    = modules.pop.underscore
+      relative_dir    = modules.map { |m| m.underscore }.join('/')
+      full_module_name = (modules.map { |m| m.camelcase } + [file_name.camelcase]).join('::')
+      [file_name, relative_dir, full_module_name]
     end
 end
