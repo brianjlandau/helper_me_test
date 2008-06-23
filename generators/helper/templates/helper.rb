@@ -1,4 +1,4 @@
-module <%= helper_full_name %>Helper
+module <%= class_name %>Helper
 <% for hmethod in helper_methods -%>
   def <%= hmethod %>
     

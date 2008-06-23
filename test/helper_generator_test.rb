@@ -3,12 +3,14 @@ require File.dirname(__FILE__) + '/generator_test_init'
 class HelperGeneratorTest < GeneratorTestCase
   def setup
     super
+    # this is so the generator gets found
     cp_r File.join(PLUGIN_ROOT, 'generators/helper'),  File.join(RAILS_ROOT, 'vendor/generators')
   end
   
   context 'running generator with simple name' do
     setup do
       run_generator('helper', %w(Tags))
+      require 'tags_helper'
     end
     
     should 'create helper' do
@@ -22,7 +24,8 @@ class HelperGeneratorTest < GeneratorTestCase
   
   context 'running generator with complex name' do
     setup do
-      run_generator('helper' %w(Admin::Tags))
+      run_generator('helper', %w(Admin::Tags))
+      require 'admin/tags_helper'
     end
     
     should 'create helper' do
@@ -36,7 +39,8 @@ class HelperGeneratorTest < GeneratorTestCase
   
   context 'running generator with method names' do
     setup do
-      run_generator('helper' %w(Tags format sort to_html))
+      run_generator('helper', %w(Tags format sort to_html))
+      require 'tags_helper'
     end
     
     should 'create helper with methods' do

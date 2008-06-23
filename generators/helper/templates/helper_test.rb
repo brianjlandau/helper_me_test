@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class <%= helper_name %>HelperTest < ActionView::TestCase
+class <%= class_name %>HelperTest < ActionView::TestCase
 
 <% for hmethod in helper_methods -%>
   def test_<%= hmethod %>
