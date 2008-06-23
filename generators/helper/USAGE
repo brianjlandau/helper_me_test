@@ -2,7 +2,9 @@ Description:
     Explain the generator
 
 Example:
-    ./script/generate helper_tests [Helpers]
+    ./script/generate helper Dates [method_name, ...]
 
     This will create:
-        what/will/it/create
+        app/helpers/dates_helper.rb
+        test/helpers/dates_helper_test.rb
+    
