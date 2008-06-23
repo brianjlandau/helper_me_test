@@ -4,7 +4,7 @@ class HelperGeneratorTest < GeneratorTestCase
   def setup
     super
     # this is so the generator gets found
-    cp_r File.join(PLUGIN_ROOT, 'generators/helper'),  File.join(RAILS_ROOT, 'vendor/generators')
+    cp_r File.join(PLUGIN_ROOT, 'generators/helper/'),  File.join(RAILS_ROOT, 'vendor/generators')
   end
   
   context 'running generator with simple name' do
