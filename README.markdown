@@ -24,10 +24,14 @@ Features
 ### Generators
 
 * __Helper Test Generator:__
+    * Usage:
+        * `script/generate helper_tests [SampleHelper Admin::AnotherHelper ...]`
     * Creates helper tests for each helper you currently have, creating one test for
       each public method in the module. If you instead pass it a space separated set
       of helper module names you'll only generate tests for those.
 * __Helper Generator:__
+    * Usage:
+        * `script/generate helper HelperName [methods ...]`
     * Creates a helper based on a camelcased or underscored name, and a test file
       for it. It will also accept a list of method names and create methods for
       each of them and a test for each of the methods.
@@ -36,7 +40,43 @@ Features
 Examples
 ---------
 
-Example goes here.
+#### Using Tag Assertions:
+
+    def test_some_html_string_with_assert_tag_in
+      html = "<div><ul id="list"><li>one</li><li>two</li></ul><p id="content">hello world</p></div>"
+      assert_tag_in html, :ul, :attributes => {:id => 'list'}, :child => {:tag => 'li'}
+      assert_tag_in html, :p
+    end
+    
+
+#### Using Selector Assertions:
+
+    def test_some_html_string_with_assert_select_in
+      html = "<div><ul id="list"><li>one</li><li>two</li></ul><p id="content">hello world</p></div>"
+      assert_select_in html 'ul#list' do
+        assert_select_in 'li'
+      end
+      assert_select_in html,'p#content', 'hello world'
+    end
+    
+
+#### Using Hpricot Methods
+
+    def test_some_html_string_with_assert_hpricot_in
+      html = "<div><ul id="list"><li>one</li><li>two</li></ul><p id="content">hello world</p></div>"
+      assert_hpricot_in html, 'ul[@id="list"][li="one"]'
+      assert_hpricot_in html, 'p[@id="content"]'
+    end
+    
+
+
+
+### Additional Documentation
+
+* [assert_tag RDoc](http://api.rubyonrails.org/classes/ActionController/Assertions/TagAssertions.html "ActionController::Assertions::TagAssertions")
+* [assert_select RDoc](http://api.rubyonrails.org/classes/ActionController/Assertions/SelectorAssertions.html "ActionController::Assertions::SelectorAssertions")
+* [Hpricot Tutorial](https://code.whytheluckystiff.net/hpricot/wiki/AnHpricotShowcase)
+* [Hpricot RDoc](http://code.whytheluckystiff.net/doc/hpricot/ "Hpricot Documentation")
 
 
 ### License
