@@ -12,7 +12,6 @@ end
 
 # HelperMeTest
 module HelperMeTest
-  
   module Assertions
     
     # Pair of assertions to testing elements in the HTML of a target string.
@@ -372,3 +371,4 @@ module HelperMeTest
     
   end
 end
+# /HelperMeTest
