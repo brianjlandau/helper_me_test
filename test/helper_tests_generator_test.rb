@@ -58,4 +58,16 @@ class HelperTestsGeneratorTest < GeneratorTestCase
     end
   end
   
+  context 'using generator with a complex name filesystem-path style' do
+    setup do
+      run_generator('helper_tests', %w(admin/post_helper))
+    end
+    
+    should 'create just one helper test' do
+      assert_no_file_exists 'test/helpers/blog_helper_test'
+      assert_no_file_exists 'test/helpers/sample_helper_test'
+      assert_generated_class 'test/helpers/admin/post_helper_test', 'ActionView::TestCase'
+    end
+  end
+  
 end

@@ -25,7 +25,7 @@ class HelperTestsGenerator < Rails::Generator::Base
   
   private
     def create_helper_test(manifest, helper_name)
-      helper_file_name, helper_relative_dir, helper_full_name = extract_modules_names_paths(helper_name)
+      helper_file_name, helper_relative_dir, helper_full_name = extract_names_paths(helper_name)
       helper_methods = helper_full_name.constantize.public_instance_methods
 
       manifest.class_collisions "#{helper_full_name}Test"
@@ -44,7 +44,7 @@ class HelperTestsGenerator < Rails::Generator::Base
     #   good/fun/stuff
     #   Good::Fun::Stuff
     # produce the same results.
-    def extract_modules_names_paths(name)
+    def extract_names_paths(name)
       modules = name.include?('/') ? name.split('/') : name.split('::')
       file_name    = modules.pop.underscore
       relative_dir    = modules.map { |m| m.underscore }.join('/')

@@ -22,6 +22,6 @@ class HelperGenerator < Rails::Generator::NamedBase
   
   protected
     def banner
-      "Usage: #{$0} #{spec.name} Dates [methods ...]"
+      "Usage: #{$0} #{spec.name} HelperName [methods ...]"
     end
 end

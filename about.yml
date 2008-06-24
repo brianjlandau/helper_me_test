@@ -2,7 +2,7 @@ name: Helper Me Test
 author: Brian Landau
 company: Viget Labs
 version: 1.0
-description: 
+description: Providing quick and easy ways to create and write tests for your Rails helpers.
 url: 
 install: 
 license: MIT
