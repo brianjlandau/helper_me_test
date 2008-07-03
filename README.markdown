@@ -29,6 +29,8 @@ Features
     * Creates helper tests for each helper you currently have, creating one test for
       each public method in the module. If you instead pass it a space separated set
       of helper module names you'll only generate tests for those.
+    * You can also pass it an option of `--skip-method-tests` and it won't create tests
+      for each of the helper methods.
 * __Helper Generator:__
     * Usage:
         * `script/generate helper HelperName [methods ...]`

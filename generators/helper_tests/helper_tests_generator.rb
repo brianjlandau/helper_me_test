@@ -22,11 +22,21 @@ class HelperTestsGenerator < Rails::Generator::Base
     def banner
       "Usage: #{$0} #{spec.name} [SampleHelper Admin::AnotherHelper ...]"
     end
+    
+    def add_options!(opt)
+      opt.separator ''
+      opt.separator 'Options:'
+      opt.on("--skip-method-tests",
+             "Don't add test methods to the test-case file for the helpers") { |v| options[:skip_method_tests] = v }
+    end
   
   private
     def create_helper_test(manifest, helper_name)
       helper_file_name, helper_relative_dir, helper_full_name = extract_names_paths(helper_name)
-      helper_methods = helper_full_name.constantize.public_instance_methods
+      
+      unless options[:skip_method_tests]
+        helper_methods = helper_full_name.constantize.public_instance_methods
+      end
 
       manifest.class_collisions "#{helper_full_name}Test"
 
