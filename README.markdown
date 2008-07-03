@@ -36,6 +36,12 @@ Features
       for it. It will also accept a list of method names and create methods for
       each of them and a test for each of the methods.
 
+### Rake Tasks
+
+I've also provided a rake task for running the generated helper tests, `rake test:helpers`
+and changed the `rake test` task to run that test task in a addition to the other
+test tasks.
+
 
 Examples
 ---------
