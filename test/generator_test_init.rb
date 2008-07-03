@@ -166,4 +166,10 @@ class GeneratorTestCase < ActiveSupport::TestCase
     end
   end
   
+  def assert_has_no_method(body, *methods)
+    methods.each do |name|
+      assert body !~ /^\s*def #{name}(\(.+\))?\n((\n|   .*\n)*)  end/, "should have method #{name}"
+    end
+  end
+  
 end

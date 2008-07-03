@@ -46,6 +46,18 @@ class HelperTestsGeneratorTest < GeneratorTestCase
     end
   end
   
+  context 'using generator with skip-method-tests option' do
+    setup do
+      run_generator('helper_tests', %w(--skip-method-tests BlogHelper))
+    end
+    
+    should 'create just one helper test' do
+      assert_generated_class 'test/helpers/blog_helper_test', 'ActionView::TestCase' do |file|
+        assert_has_no_method file, :test_post_formater, :test_date_formater
+      end
+    end
+  end
+  
   context 'using generator with a namespaced module parameter' do
     setup do
       run_generator('helper_tests', %w(Admin::PostHelper))
