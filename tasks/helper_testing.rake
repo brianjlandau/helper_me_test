@@ -17,5 +17,5 @@ namespace :test do
     t.pattern = 'test/helpers/**/*_test.rb'
     t.verbose = true
   end
-  Rake::Task['test:units'].comment = "Run the helper tests in test/helpers"
+  Rake::Task['test:helpers'].comment = "Run the helper tests in test/helpers"
 end
