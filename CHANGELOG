@@ -1,3 +1,7 @@
+== 3.0 / September 4, 2010
+
+* Remove Generators for Rails 3.
+
 == 2.0 / June 24, 2008
 
 * Slim down assert_select_in based on http://gist.github.com/52976 by TJ Stankus
